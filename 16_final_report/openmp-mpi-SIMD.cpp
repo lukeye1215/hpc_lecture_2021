@@ -5,9 +5,6 @@
 #include <chrono>
 using namespace std;
 
-// execute command:
-// mpicxx openmp-mpi-SIMD.cpp -fopenmp -fopt-info-vec-optimized -march=native -O3
-// mpirun -np 4 ./a.out
 
 int main(int argc, char** argv) {
   int size, rank;
@@ -75,6 +72,7 @@ int main(int argc, char** argv) {
     double time = comp_time+comm_time;
     printf("N    : %d\n",N);
     printf("comp : %lf s\n", comp_time);
+
     printf("comm : %lf s\n", comm_time);
     printf("total: %lf s (%lf GFlops)\n",time,2.*N*N*N/time/1e9);
     printf("error: %lf\n",err/N/N);
