@@ -1,3 +1,7 @@
+//execute command:
+// mpicxx openmp-mpi-SIMD.cpp -fopenmp -fopt-info-vec-optimized -march=native -O3
+//mpirun -np 4 ./a.out
+
 #include <mpi.h>
 #include <cstdio>
 #include <cmath>
@@ -8,8 +12,8 @@ using namespace std;
 int main(int argc, char** argv) {
   int size, rank;
   MPI_Init(&argc, &argv);
-  MPI_Comm_size(MPI_COMM_WORLD, &size);
-  MPI_Comm_rank(MPI_COMM_WORLD, &rank);
+  MPI_Comm_size(MPI_COMM_WORLD, &size);mpirun -np 4 ./a.out
+  MPI_Comm_rank(MPI_COMM_WORLD, &rank);mpirun -np 4 ./a.outmpirun -np 4 ./a.out
 
   const int N = 256;
   vector<float> A(N*N);
@@ -39,6 +43,8 @@ int main(int argc, char** argv) {
   for(int irank=0; irank<size; irank++) {
     auto tic = chrono::steady_clock::now();
     offset = N/size*((rank+irank) % size);
+    
+    //MPI + SIMD auto vetor by complier
     #pragma omp parallel for schedule(static)
     for (int i=0; i<N/size; i++)
       for (int j=0; j<N/size; j++)
