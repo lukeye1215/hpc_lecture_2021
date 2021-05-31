@@ -15,7 +15,7 @@ int main(int argc, char** argv) {
     for (int j=0; j<N; j++) {
       A[N*i+j] = drand48();
       B[N*i+j] = drand48();
-      C[N*i+j] = 0;
+      //C[N*i+j] = 0;
     }
   }
   
@@ -37,7 +37,8 @@ int main(int argc, char** argv) {
         }
       }
       for (int ic=0; ic<m; ic+=mc) {
-    float Ac[mc*kc],Cc[mc*nc];
+    float Ac[mc*kc];
+    float Cc[mc*nc];
         for (int i=0; i<mc; i++) {
           for (int p=0; p<kc; p++) {
             Ac[i*kc+p] = A[(i+ic)*N+p+pc];
@@ -57,9 +58,11 @@ int main(int argc, char** argv) {
             }
           }
         }
+        int ind = 0;
         for (int i=0; i<mc; i++) {
           for (int j=0; j<nc; j++) {
-            C[(i+ic)*N+j+jc] += Cc[i*nc+j];
+            ind = (i+ic)*N
+            C[ind+j+jc] = C[ind+j+jc] + Cc[i*nc+j];
           }
         }
       }
