@@ -31,7 +31,7 @@ int main(int argc, char** argv)
     cudaGetDevice(&gpurank);
 
     // Generate Matrix
-    const int N = 256;
+    const int N = 512;
     vector<float> A(N * N);
     vector<float> B(N * N);
     vector<float> C(N * N, 0);
