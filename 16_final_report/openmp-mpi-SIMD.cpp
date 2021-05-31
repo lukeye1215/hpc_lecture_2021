@@ -1,13 +1,13 @@
-//execute command:
-// mpicxx openmp-mpi-SIMD.cpp -fopenmp -fopt-info-vec-optimized -march=native -O3
-//mpirun -np 4 ./a.out
-
 #include <mpi.h>
 #include <cstdio>
 #include <cmath>
 #include <vector>
 #include <chrono>
 using namespace std;
+
+// execute command:
+// mpicxx openmp-mpi-SIMD.cpp -fopenmp -fopt-info-vec-optimized -march=native -O3
+// mpirun -np 4 ./a.out
 
 int main(int argc, char** argv) {
   int size, rank;
@@ -54,6 +54,7 @@ int main(int argc, char** argv) {
     comp_time += chrono::duration<double>(toc - tic).count();
     MPI_Request request[2];
     MPI_Isend(&subB[0], N*N/size, MPI_FLOAT, send_to, 0, MPI_COMM_WORLD, &request[0]);
+
     MPI_Irecv(&recv[0], N*N/size, MPI_FLOAT, recv_from, 0, MPI_COMM_WORLD, &request[1]);
     MPI_Waitall(2, request, MPI_STATUS_IGNORE);
     for (int i=0; i<N*N/size; i++)
