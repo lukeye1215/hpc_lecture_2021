@@ -5,12 +5,15 @@
 #include <chrono>
 using namespace std;
 
+// execute command:
+// mpicxx openmp-mpi-SIMD.cpp -fopenmp -fopt-info-vec-optimized -march=native -O3
+// mpirun -np 4 ./a.out
 
 int main(int argc, char** argv) {
   int size, rank;
   MPI_Init(&argc, &argv);
-  MPI_Comm_size(MPI_COMM_WORLD, &size);mpirun -np 4 ./a.out
-  MPI_Comm_rank(MPI_COMM_WORLD, &rank);mpirun -np 4 ./a.outmpirun -np 4 ./a.out
+  MPI_Comm_size(MPI_COMM_WORLD, &size);
+  MPI_Comm_rank(MPI_COMM_WORLD, &rank);
 
   const int N = 256;
   vector<float> A(N*N);
